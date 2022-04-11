@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "nordic_common.h": "c",
+        "app_util.h": "c",
+        "nrf.h": "c",
+        "softdevice_handler.h": "c",
+        "app_ram_base.h": "c",
+        "nrf_bootloader_app_start.h": "c",
+        "compiler_abstraction.h": "c",
+        "nrf_delay.h": "c",
+        "system_nrf51.h": "c",
+        "nrf_nvic.h": "c",
+        "nrf_soc.h": "c",
+        "nrf51.h": "c"
+    },
+    "cmake.buildEnvironment": {
+        "SDK_ROOT": "sdk/nRF5_SDK_12.3.0_d7731ad"
+    }
+}
