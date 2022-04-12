@@ -11,9 +11,22 @@
         "system_nrf51.h": "c",
         "nrf_nvic.h": "c",
         "nrf_soc.h": "c",
-        "nrf51.h": "c"
+        "nrf51.h": "c",
+        "nrf_error.h": "c",
+        "nrf52820.h": "c",
+        "nrf52820_bitfields.h": "c",
+        "ble_advdata.h": "c",
+        "bsp.h": "c",
+        "nrf_sdh.h": "c",
+        "nrf_sdh_ble.h": "c",
+        "nrf_pwr_mgmt.h": "c",
+        "ble_advertising.h": "c",
+        "typeinfo": "c",
+        "*.tcc": "c"
     },
-    "cmake.buildEnvironment": {
-        "SDK_ROOT": "sdk/nRF5_SDK_12.3.0_d7731ad"
-    }
+    "C_Cpp.intelliSenseEngine": "Tag Parser",
+    "cmake.configureArgs": [
+        "-DCMAKE_TOOLCHAIN_FILE=\"./CMake/arm-none-eabi.cmake\""
+    ],
+    "cmake.enableTraceLogging": true
 }
