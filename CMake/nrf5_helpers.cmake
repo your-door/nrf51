@@ -28,11 +28,36 @@ function(nrf5_get_sdk_version sdk_path out_sdk_version)
   endif()
   set(release_notes_path "${sdk_path}/documentation/release_notes.txt")
   if(NOT EXISTS "${release_notes_path}")
-    message(FATAL_ERROR "Cannot find release notes in following SDK: ${release_notes_path}")
+    message(FATAL_ERROR "Cannot find release notes in following SDK: ${sdk_path}")
   endif()
   file(STRINGS "${release_notes_path}" release_notes LIMIT_COUNT 1)
   string(REGEX MATCH "[0-9]+\.[0-9]+\.[0-9]+" version "${release_notes}")
   set(${out_sdk_version} ${version} PARENT_SCOPE)
+endfunction()
+
+function(nrf5_get_mdk_version mdk_path out_mdk_version)
+  if(NOT EXISTS "${mdk_path}")
+    message(FATAL_ERROR "Specified nRF MDK doesn't exist: ${mdk_path}")
+  endif()
+
+  set(nrf_header_file "${mdk_path}/nrf.h")
+
+  if(NOT EXISTS "${nrf_header_file}")
+    message(FATAL_ERROR "Cannot find nrf.h in following MDK: ${mdk_path}")
+  endif()
+  
+  file(STRINGS "${nrf_header_file}" nrf_header_lines)
+  list(JOIN nrf_header_lines " " nrf_header)
+
+  if ("${nrf_header}" MATCHES "#define MDK_MAJOR_VERSION   ([0-9]+)")
+    set(mdk_major ${CMAKE_MATCH_1})
+  endif()
+
+  if ("${nrf_header}" MATCHES "#define MDK_MINOR_VERSION   ([0-9]+)")
+    set(mdk_minor ${CMAKE_MATCH_1})
+  endif()
+
+  set(${out_mdk_version} "${mdk_major}.${mdk_minor}" PARENT_SCOPE)
 endfunction()
 
 function(nrf5_validate_sdk_version sdk_version)
@@ -40,6 +65,14 @@ function(nrf5_validate_sdk_version sdk_version)
   list(FIND supported_sdk_versions ${sdk_version} sdk_version_index)
   if(sdk_version_index EQUAL -1)
     message(FATAL_ERROR "Provided nRF SDK version ${sdk_version} is not supported, try these: ${supported_sdk_versions}")
+  endif()
+endfunction()
+
+function(nrf5_validate_mdk_version mdk_version)
+  set(supported_mdk_versions "8.46")
+  list(FIND supported_mdk_versions ${mdk_version} mdk_version_index)
+  if(mdk_version_index EQUAL -1)
+    message(FATAL_ERROR "Provided nRF MDK version ${mdk_version} is not supported, try these: ${supported_mdk_versions}")
   endif()
 endfunction()
 
@@ -95,7 +128,7 @@ function(nrf5_get_board_target sdk_version board out_target out_define)
   set(${out_define} ${board_define} PARENT_SCOPE)
 endfunction()
 
-function(nrf5_get_target_flags sdk_version target out_target out_target_short out_target_flags)
+function(nrf5_get_target_flags mdk version target out_target out_target_short out_target_flags)
   # Handle aliases
   set(target_alias_nrf51801 nrf51801_xxab)
   set(target_alias_nrf51802 nrf51802_xxaa)
@@ -120,24 +153,26 @@ function(nrf5_get_target_flags sdk_version target out_target out_target_short ou
   set(define_key 1)
   set(min_sdk_key 2)
   set(max_sdk_key 3)
+  set(min_mdk_key 4)
+  set(max_mdk_key 5)
 
-  set(target_nrf51801_xxab nrf51801 NRF51801_XXAB 15.3.0 16.0.0)
-  set(target_nrf51802_xxaa nrf51802 NRF51802_XXAA 15.3.0 16.0.0)
-  set(target_nrf51822_xxaa nrf51822 NRF51822_XXAA 15.3.0 16.0.0)
-  set(target_nrf51822_xxab nrf51822 NRF51822_XXAB 15.3.0 16.0.0)
-  set(target_nrf51822_xxac nrf51822 NRF51822_XXAC 15.3.0 16.0.0)
-  set(target_nrf51824_xxaa nrf51824 NRF51824_XXAA 15.3.0 16.0.0)
-  set(target_nrf51422_xxaa nrf51422 NRF51422_XXAA 15.3.0 16.0.0)
-  set(target_nrf51422_xxab nrf51422 NRF51422_XXAB 15.3.0 16.0.0)
-  set(target_nrf51422_xxac nrf51422 NRF51422_XXAC 15.3.0 16.0.0)
-  set(target_nrf52805_xxaa nrf52805 NRF52805_XXAA 15.3.0 16.0.0)
-  set(target_nrf52810_xxaa nrf52810 NRF52810_XXAA 15.3.0 16.0.0)
-  set(target_nrf52811_xxaa nrf52811 NRF52811_XXAA 15.3.0 16.0.0)
-  set(target_nrf52820_xxaa nrf52820 NRF52820_XXAA 15.3.0 16.0.0 17.1.0)
-  set(target_nrf52832_xxaa nrf52832 NRF52832_XXAA 15.3.0 16.0.0)
-  set(target_nrf52832_xxab nrf52832 NRF52832_XXAB 15.3.0 16.0.0)
-  set(target_nrf52833_xxaa nrf52833 NRF52833_XXAA 16.0.0 16.0.0)
-  set(target_nrf52840_xxaa nrf52840 NRF52840_XXAA 15.3.0 16.0.0 17.1.0)
+  set(target_nrf51801_xxab nrf51801 NRF51801_XXAB 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf51802_xxaa nrf51802 NRF51802_XXAA 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf51822_xxaa nrf51822 NRF51822_XXAA 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf51822_xxab nrf51822 NRF51822_XXAB 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf51822_xxac nrf51822 NRF51822_XXAC 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf51824_xxaa nrf51824 NRF51824_XXAA 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf51422_xxaa nrf51422 NRF51422_XXAA 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf51422_xxab nrf51422 NRF51422_XXAB 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf51422_xxac nrf51422 NRF51422_XXAC 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf52805_xxaa nrf52805 NRF52805_XXAA 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf52810_xxaa nrf52810 NRF52810_XXAA 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf52811_xxaa nrf52811 NRF52811_XXAA 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf52820_xxaa nrf52820 NRF52820_XXAA 15.3.0 17.1.0 8.46 8.46)
+  set(target_nrf52832_xxaa nrf52832 NRF52832_XXAA 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf52832_xxab nrf52832 NRF52832_XXAB 15.3.0 16.0.0 8.46 8.46)
+  set(target_nrf52833_xxaa nrf52833 NRF52833_XXAA 16.0.0 16.0.0 8.46 8.46)
+  set(target_nrf52840_xxaa nrf52840 NRF52840_XXAA 15.3.0 17.1.0 8.46 8.46)
 
   if(NOT target_${target})
     message(FATAL_ERROR "Unsupported nRF target: ${target}")
@@ -146,10 +181,18 @@ function(nrf5_get_target_flags sdk_version target out_target out_target_short ou
   list(GET target_${target} ${target_key} target_value)
   list(GET target_${target} ${define_key} define_value)
   list(GET target_${target} ${min_sdk_key} min_sdk_value)
-  list(GET target_${target} -1 max_sdk_value)
+  list(GET target_${target} ${max_sdk_key} max_sdk_value)
+  list(GET target_${target} ${min_mdk_key} min_mdk_value)
+  list(GET target_${target} ${max_mdk_key} max_mdk_value)
 
-  if((sdk_version VERSION_LESS min_sdk_value) OR (sdk_version VERSION_GREATER max_sdk_value))
-    message(FATAL_ERROR "Unsupported nRF target ${target} in version ${sdk_version}")
+  if(NOT mdk)
+    if((version VERSION_LESS min_sdk_value) OR (version VERSION_GREATER max_sdk_value))
+      message(FATAL_ERROR "Unsupported nRF target ${target} in version ${version}")
+    endif()
+  else()
+    if((version VERSION_LESS min_mdk_value) OR (version VERSION_GREATER max_mdk_value))
+      message(FATAL_ERROR "Unsupported nRF target ${target} in version ${version}")
+    endif()
   endif()
 
   # Common compiler flags for C, ASM and Linker.
@@ -173,18 +216,26 @@ function(nrf5_get_target_flags sdk_version target out_target out_target_short ou
 
 endfunction()
 
-function(nrf5_find_linker_file sdk_path sdk_version target sd_variant out_linker_file_path)
+function(nrf5_find_linker_file mdk sdk_path sdk_version target sd_variant out_linker_file_path)
   nrf5_split_target(${target} target_family target_variant target_group)
-  set(linker_path_patterns 
-    # Config files (contain necessary sections)
-    "${sdk_path}/config/${target_group}/armgcc/*.ld"
-    # SoftDevice linker files (contain good start/end sections)
-    "${sdk_path}/components/softdevice/${sd_variant}/toolchain/armgcc/*${sd_variant}*${target}*.ld"
-    # MDK linker files (for explicit target)
-    "${sdk_path}/modules/nrfx/mdk/*${target}*.ld"
-    # More generic MDK files for specific board variant
-    "${sdk_path}/modules/nrfx/mdk/*${target_family}_${target_variant}*.ld"
-  )
+  if(NOT mdk)
+    set(linker_path_patterns 
+      # Config files (contain necessary sections)
+      "${sdk_path}/config/${target_group}/armgcc/*.ld"
+      # SoftDevice linker files (contain good start/end sections)
+      "${sdk_path}/components/softdevice/${sd_variant}/toolchain/armgcc/*${sd_variant}*${target}*.ld"
+      # MDK linker files (for explicit target)
+      "${sdk_path}/modules/nrfx/mdk/*${target}*.ld"
+      # More generic MDK files for specific board variant
+      "${sdk_path}/modules/nrfx/mdk/*${target_family}_${target_variant}*.ld"
+    )
+  else()
+    set(linker_path_patterns 
+      # MDK linker files (for explicit target)
+      "${sdk_path}/*${target}*.ld"
+    )
+  endif()
+
   nrf5_find_file_path_with_patterns("${linker_path_patterns}" linker_file_path)
   set(${out_linker_file_path} "${linker_file_path}" PARENT_SCOPE)
 endfunction()
@@ -206,6 +257,8 @@ function(nrf5_get_startup_file sdk_path target out_startup_file out_system_file)
     "${sdk_path}/modules/nrfx/mdk/gcc_startup_${target_group}.S"
     # Family specific startup file.
     "${sdk_path}/modules/nrfx/mdk/gcc_startup_${target_family}.S"
+    # Directly linked MDK
+    "${sdk_path}/gcc_startup_${target_family}.S"
   )
 
   nrf5_find_file_path_with_patterns("${startup_file_patterns}" startup_file)
@@ -218,6 +271,8 @@ function(nrf5_get_startup_file sdk_path target out_startup_file out_system_file)
     "${sdk_path}/modules/nrfx/mdk/system_${target_group}.c"
     # Family specific system file.
     "${sdk_path}/modules/nrfx/mdk/system_${target_family}.c"
+    # Directly linked MDK
+    "${sdk_path}/system_${target_family}.c"
   )
 
   nrf5_find_file_path_with_patterns("${system_file_patterns}" system_file)
