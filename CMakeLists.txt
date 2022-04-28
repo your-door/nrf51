@@ -14,12 +14,22 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
   nrf5_atflags
   nrf5_atomic
   nrf5_soc
+  nrf5_queue
+  nrf5_pwr_mgmt
   # Application
+  nrf5_app_timer
   nrf5_app_error
   nrf5_app_util_platform
   # BLE
   nrf5_sdh
   nrf5_ble_common
   # Crypto
+  nrf5_nrfx_rng
+  nrf5_ext_mbedtls
+  nrf5_ext_mbedcrypto
+  nrf5_crypto_mbedtls_backend
+  nrf5_crypto_nrf_hw_backend
+  nrf5_mem_manager # Needed for mbed TLS
+  nrf5_drv_rng
   nrf5_crypto
 )

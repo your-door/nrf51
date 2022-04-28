@@ -290,6 +290,7 @@ add_library(nrf5_ext_mbedcrypto OBJECT EXCLUDE_FROM_ALL
   "${NRF5_SDK_PATH}/external/mbedtls/library/pkparse.c"
   "${NRF5_SDK_PATH}/external/mbedtls/library/pkwrite.c"
   "${NRF5_SDK_PATH}/external/mbedtls/library/platform.c"
+  "${NRF5_SDK_PATH}/external/mbedtls/library/platform_util.c"
   "${NRF5_SDK_PATH}/external/mbedtls/library/ripemd160.c"
   "${NRF5_SDK_PATH}/external/mbedtls/library/rsa.c"
   "${NRF5_SDK_PATH}/external/mbedtls/library/sha1.c"

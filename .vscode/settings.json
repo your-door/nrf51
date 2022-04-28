@@ -22,11 +22,14 @@
         "nrf_pwr_mgmt.h": "c",
         "ble_advertising.h": "c",
         "typeinfo": "c",
-        "*.tcc": "c"
+        "*.tcc": "c",
+        "ble_gap.h": "c",
+        "nrf_crypto_rng.h": "c",
+        "nrf_crypto_rng_backend.h": "c",
+        "nrf_hw_backend_rng_mbedtls.h": "c",
+        "app_error.h": "c",
+        "nrf_log_ctrl.h": "c",
+        "app_timer.h": "c"
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser",
-    "cmake.configureArgs": [
-        "-DCMAKE_TOOLCHAIN_FILE=\"./CMake/arm-none-eabi.cmake\""
-    ],
-    "cmake.enableTraceLogging": true
 }

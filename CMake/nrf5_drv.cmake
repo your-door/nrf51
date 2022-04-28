@@ -295,6 +295,7 @@ target_include_directories(nrf5_drv_rng PUBLIC
 target_link_libraries(nrf5_drv_rng PUBLIC
   nrf5_app_util_platform
   nrf5_nrfx_rng
+  nrf5_queue
   nrf5_soc
 )
 list(APPEND NRF5_LIBRARY_NRF5_DRV_RNG_DEPENDENCIES

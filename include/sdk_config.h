@@ -46,6 +46,7 @@
 #ifdef USE_APP_CONFIG
 #include "app_config.h"
 #endif
+
 // <h> nRF_BLE 
 
 //==========================================================
@@ -53,7 +54,7 @@
  
 
 #ifndef BLE_ADVERTISING_ENABLED
-#define BLE_ADVERTISING_ENABLED 0
+#define BLE_ADVERTISING_ENABLED 1
 #endif
 
 // <e> BLE_DTM_ENABLED - ble_dtm - Module for testing RF/PHY using DTM commands
@@ -919,49 +920,49 @@
  
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_CTR_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CTR_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CTR_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_CFB_ENABLED  - Enable the AES CFB mode using mbed TLS.
  
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_CFB_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CFB_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CFB_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_ECB_ENABLED  - Enable the AES ECB mode using mbed TLS.
  
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_ECB_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_ECB_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_ECB_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_CBC_MAC_ENABLED  - Enable the AES CBC MAC mode using mbed TLS.
  
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_CBC_MAC_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CBC_MAC_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CBC_MAC_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_CMAC_ENABLED  - Enable the AES CMAC mode using mbed TLS.
  
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_CMAC_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CMAC_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CMAC_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_CCM_ENABLED  - Enable the AES CCM mode using mbed TLS.
  
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_CCM_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CCM_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CCM_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_GCM_ENABLED  - Enable the AES GCM mode using mbed TLS.
  
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_GCM_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_GCM_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_GCM_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192R1_ENABLED  - Enable secp192r1 (NIST 192-bit) curve
@@ -970,7 +971,7 @@
 // <i> Enable this setting if you need secp192r1 (NIST 192-bit) support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192R1_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192R1_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192R1_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224R1_ENABLED  - Enable secp224r1 (NIST 224-bit) curve
@@ -979,7 +980,7 @@
 // <i> Enable this setting if you need secp224r1 (NIST 224-bit) support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224R1_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224R1_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224R1_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256R1_ENABLED  - Enable secp256r1 (NIST 256-bit) curve
@@ -988,7 +989,7 @@
 // <i> Enable this setting if you need secp256r1 (NIST 256-bit) support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256R1_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256R1_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256R1_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP384R1_ENABLED  - Enable secp384r1 (NIST 384-bit) curve
@@ -997,7 +998,7 @@
 // <i> Enable this setting if you need secp384r1 (NIST 384-bit) support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP384R1_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP384R1_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP384R1_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP521R1_ENABLED  - Enable secp521r1 (NIST 521-bit) curve
@@ -1006,7 +1007,7 @@
 // <i> Enable this setting if you need secp521r1 (NIST 521-bit) support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP521R1_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP521R1_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP521R1_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192K1_ENABLED  - Enable secp192k1 (Koblitz 192-bit) curve
@@ -1015,7 +1016,7 @@
 // <i> Enable this setting if you need secp192k1 (Koblitz 192-bit) support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192K1_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192K1_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192K1_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224K1_ENABLED  - Enable secp224k1 (Koblitz 224-bit) curve
@@ -1024,7 +1025,7 @@
 // <i> Enable this setting if you need secp224k1 (Koblitz 224-bit) support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224K1_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224K1_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224K1_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256K1_ENABLED  - Enable secp256k1 (Koblitz 256-bit) curve
@@ -1033,7 +1034,7 @@
 // <i> Enable this setting if you need secp256k1 (Koblitz 256-bit) support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256K1_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256K1_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256K1_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP256R1_ENABLED  - Enable bp256r1 (Brainpool 256-bit) curve
@@ -1042,7 +1043,7 @@
 // <i> Enable this setting if you need bp256r1 (Brainpool 256-bit) support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP256R1_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP256R1_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP256R1_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP384R1_ENABLED  - Enable bp384r1 (Brainpool 384-bit) curve
@@ -1051,7 +1052,7 @@
 // <i> Enable this setting if you need bp384r1 (Brainpool 384-bit) support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP384R1_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP384R1_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP384R1_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP512R1_ENABLED  - Enable bp512r1 (Brainpool 512-bit) curve
@@ -1060,7 +1061,7 @@
 // <i> Enable this setting if you need bp512r1 (Brainpool 512-bit) support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP512R1_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP512R1_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP512R1_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_CURVE25519_ENABLED  - Enable Curve25519 curve
@@ -1069,7 +1070,7 @@
 // <i> Enable this setting if you need Curve25519 support using MBEDTLS
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_CURVE25519_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_CURVE25519_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_CURVE25519_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA256_ENABLED  - Enable mbed TLS SHA-256 hash functionality.
@@ -1078,7 +1079,7 @@
 // <i> mbed TLS backend implementation for SHA-256.
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA256_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA256_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA256_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA512_ENABLED  - Enable mbed TLS SHA-512 hash functionality.
@@ -1087,7 +1088,7 @@
 // <i> mbed TLS backend implementation for SHA-512.
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA512_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA512_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA512_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA256_ENABLED  - Enable mbed TLS HMAC using SHA-256.
@@ -1096,7 +1097,7 @@
 // <i> mbed TLS backend implementation for HMAC using SHA-256.
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA256_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA256_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA256_ENABLED 0
 #endif
 
 // <q> NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA512_ENABLED  - Enable mbed TLS HMAC using SHA-512.
@@ -1105,7 +1106,7 @@
 // <i> mbed TLS backend implementation for HMAC using SHA-512.
 
 #ifndef NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA512_ENABLED
-#define NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA512_ENABLED 1
+#define NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA512_ENABLED 0
 #endif
 
 // </e>
@@ -1162,11 +1163,14 @@
 #endif
 // <q> NRF_CRYPTO_BACKEND_NRF_HW_RNG_MBEDTLS_CTR_DRBG_ENABLED  - Enable mbed TLS CTR-DRBG algorithm.
  
+#ifndef NRF_CRYPTO_RNG_AUTO_INIT_ENABLED
+#define NRF_CRYPTO_RNG_AUTO_INIT_ENABLED 1
+#endif
 
 // <i> Enable mbed TLS CTR-DRBG standardized by NIST (NIST SP 800-90A Rev. 1). The nRF HW RNG is used as an entropy source for seeding.
 
 #ifndef NRF_CRYPTO_BACKEND_NRF_HW_RNG_MBEDTLS_CTR_DRBG_ENABLED
-#define NRF_CRYPTO_BACKEND_NRF_HW_RNG_MBEDTLS_CTR_DRBG_ENABLED 1
+#define NRF_CRYPTO_BACKEND_NRF_HW_RNG_MBEDTLS_CTR_DRBG_ENABLED 0
 #endif
 
 // </e>
@@ -5096,7 +5100,7 @@
 // <e> APP_TIMER_ENABLED - app_timer - Application timer functionality
 //==========================================================
 #ifndef APP_TIMER_ENABLED
-#define APP_TIMER_ENABLED 0
+#define APP_TIMER_ENABLED 1
 #endif
 // <o> APP_TIMER_CONFIG_RTC_FREQUENCY  - Configure RTC prescaler.
  
@@ -5108,7 +5112,7 @@
 // <31=> 1024 Hz 
 
 #ifndef APP_TIMER_CONFIG_RTC_FREQUENCY
-#define APP_TIMER_CONFIG_RTC_FREQUENCY 1
+#define APP_TIMER_CONFIG_RTC_FREQUENCY 3
 #endif
 
 // <o> APP_TIMER_CONFIG_IRQ_PRIORITY  - Interrupt priority
@@ -5777,7 +5781,7 @@
 // <e> MEM_MANAGER_ENABLED - mem_manager - Dynamic memory allocator
 //==========================================================
 #ifndef MEM_MANAGER_ENABLED
-#define MEM_MANAGER_ENABLED 0
+#define MEM_MANAGER_ENABLED 1
 #endif
 // <o> MEMORY_MANAGER_SMALL_BLOCK_COUNT - Size of each memory blocks identified as 'small' block.  <0-255> 
 
@@ -5811,7 +5815,7 @@
 
 
 #ifndef MEMORY_MANAGER_LARGE_BLOCK_COUNT
-#define MEMORY_MANAGER_LARGE_BLOCK_COUNT 0
+#define MEMORY_MANAGER_LARGE_BLOCK_COUNT 2
 #endif
 
 // <o> MEMORY_MANAGER_LARGE_BLOCK_SIZE -  Size of each memory blocks identified as 'large' block. 
@@ -5825,7 +5829,7 @@
 
 
 #ifndef MEMORY_MANAGER_XLARGE_BLOCK_COUNT
-#define MEMORY_MANAGER_XLARGE_BLOCK_COUNT 0
+#define MEMORY_MANAGER_XLARGE_BLOCK_COUNT 1
 #endif
 
 // <o> MEMORY_MANAGER_XLARGE_BLOCK_SIZE -  Size of each memory blocks identified as 'extra large' block. 
@@ -6141,7 +6145,7 @@
 // <e> NRF_PWR_MGMT_ENABLED - nrf_pwr_mgmt - Power management module
 //==========================================================
 #ifndef NRF_PWR_MGMT_ENABLED
-#define NRF_PWR_MGMT_ENABLED 0
+#define NRF_PWR_MGMT_ENABLED 1
 #endif
 // <e> NRF_PWR_MGMT_CONFIG_DEBUG_PIN_ENABLED - Enables pin debug in the module.
 
@@ -6248,7 +6252,7 @@
 // <e> NRF_QUEUE_ENABLED - nrf_queue - Queue module
 //==========================================================
 #ifndef NRF_QUEUE_ENABLED
-#define NRF_QUEUE_ENABLED 0
+#define NRF_QUEUE_ENABLED 1
 #endif
 // <q> NRF_QUEUE_CLI_CMDS  - Enable CLI commands specific to the module
  
@@ -6518,6 +6522,42 @@
 
 // </h> 
 //==========================================================
+
+// <h> nRF_Log 
+
+//==========================================================
+// <e> NRF_LOG_BACKEND_RTT_ENABLED - nrf_log_backend_rtt - Log RTT backend
+//==========================================================
+#ifndef NRF_LOG_BACKEND_RTT_ENABLED
+#define NRF_LOG_BACKEND_RTT_ENABLED 1
+#endif
+// <o> NRF_LOG_BACKEND_RTT_TEMP_BUFFER_SIZE - Size of buffer for partially processed strings. 
+// <i> Size of the buffer is a trade-off between RAM usage and processing.
+// <i> if buffer is smaller then strings will often be fragmented.
+// <i> It is recommended to use size which will fit typical log and only the
+// <i> longer one will be fragmented.
+
+#ifndef NRF_LOG_BACKEND_RTT_TEMP_BUFFER_SIZE
+#define NRF_LOG_BACKEND_RTT_TEMP_BUFFER_SIZE 64
+#endif
+
+// <o> NRF_LOG_BACKEND_RTT_TX_RETRY_DELAY_MS - Period before retrying writing to RTT 
+#ifndef NRF_LOG_BACKEND_RTT_TX_RETRY_DELAY_MS
+#define NRF_LOG_BACKEND_RTT_TX_RETRY_DELAY_MS 1
+#endif
+
+// <o> NRF_LOG_BACKEND_RTT_TX_RETRY_CNT - Writing to RTT retries. 
+// <i> If RTT fails to accept any new data after retries
+// <i> module assumes that host is not active and on next
+// <i> request it will perform only one write attempt.
+// <i> On successful writing, module assumes that host is active
+// <i> and scheme with retry is applied again.
+
+#ifndef NRF_LOG_BACKEND_RTT_TX_RETRY_CNT
+#define NRF_LOG_BACKEND_RTT_TX_RETRY_CNT 3
+#endif
+
+// </e>
 
 // <h> nRF_Log 
 
@@ -9104,7 +9144,7 @@
 // <e> NRF_SDH_BLE_LOG_ENABLED - Enable logging in SoftDevice handler (BLE) module.
 //==========================================================
 #ifndef NRF_SDH_BLE_LOG_ENABLED
-#define NRF_SDH_BLE_LOG_ENABLED 1
+#define NRF_SDH_BLE_LOG_ENABLED 0
 #endif
 // <o> NRF_SDH_BLE_LOG_LEVEL  - Default Severity level
  
@@ -9155,7 +9195,7 @@
 // <e> NRF_SDH_LOG_ENABLED - Enable logging in SoftDevice handler module.
 //==========================================================
 #ifndef NRF_SDH_LOG_ENABLED
-#define NRF_SDH_LOG_ENABLED 1
+#define NRF_SDH_LOG_ENABLED 0
 #endif
 // <o> NRF_SDH_LOG_LEVEL  - Default Severity level
  
@@ -9206,7 +9246,7 @@
 // <e> NRF_SDH_SOC_LOG_ENABLED - Enable logging in SoftDevice handler (SoC) module.
 //==========================================================
 #ifndef NRF_SDH_SOC_LOG_ENABLED
-#define NRF_SDH_SOC_LOG_ENABLED 1
+#define NRF_SDH_SOC_LOG_ENABLED 0
 #endif
 // <o> NRF_SDH_SOC_LOG_LEVEL  - Default Severity level
  
@@ -9359,7 +9399,7 @@
 // <e> PM_LOG_ENABLED - Enable logging in Peer Manager and its submodules.
 //==========================================================
 #ifndef PM_LOG_ENABLED
-#define PM_LOG_ENABLED 1
+#define PM_LOG_ENABLED 0
 #endif
 // <o> PM_LOG_LEVEL  - Default Severity level
  
@@ -9518,7 +9558,7 @@
 // <i> Maximum number of total concurrent connections using the default configuration.
 
 #ifndef NRF_SDH_BLE_TOTAL_LINK_COUNT
-#define NRF_SDH_BLE_TOTAL_LINK_COUNT 1
+#define NRF_SDH_BLE_TOTAL_LINK_COUNT 0
 #endif
 
 // <o> NRF_SDH_BLE_GAP_EVENT_LENGTH - GAP event length. 
@@ -9923,7 +9963,7 @@
 
 // <o> NRF_SDH_CLOCK_LF_RC_CTIV - SoftDevice calibration timer interval. 
 #ifndef NRF_SDH_CLOCK_LF_RC_CTIV
-#define NRF_SDH_CLOCK_LF_RC_CTIV 0
+#define NRF_SDH_CLOCK_LF_RC_CTIV 16
 #endif
 
 // <o> NRF_SDH_CLOCK_LF_RC_TEMP_CTIV - SoftDevice calibration timer interval under constant temperature. 
@@ -9931,7 +9971,7 @@
 // <i>  if the temperature has not changed.
 
 #ifndef NRF_SDH_CLOCK_LF_RC_TEMP_CTIV
-#define NRF_SDH_CLOCK_LF_RC_TEMP_CTIV 0
+#define NRF_SDH_CLOCK_LF_RC_TEMP_CTIV 2
 #endif
 
 // <o> NRF_SDH_CLOCK_LF_ACCURACY  - External clock accuracy used in the LL to compute timing.
@@ -10089,6 +10129,49 @@
 #ifndef POWER_CONFIG_SOC_OBSERVER_PRIO
 #define POWER_CONFIG_SOC_OBSERVER_PRIO 0
 #endif
+
+//==========================================================
+// <h> segger_rtt - SEGGER RTT
+
+//==========================================================
+// <o> SEGGER_RTT_CONFIG_BUFFER_SIZE_UP - Size of upstream buffer. 
+// <i> Note that either @ref NRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE
+// <i> or this value is actually used. It depends on which one is bigger.
+
+#ifndef SEGGER_RTT_CONFIG_BUFFER_SIZE_UP
+#define SEGGER_RTT_CONFIG_BUFFER_SIZE_UP 512
+#endif
+
+// <o> SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS - Maximum number of upstream buffers. 
+#ifndef SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS
+#define SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS 2
+#endif
+
+// <o> SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN - Size of downstream buffer. 
+#ifndef SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN
+#define SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN 16
+#endif
+
+// <o> SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS - Maximum number of downstream buffers. 
+#ifndef SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS
+#define SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS 2
+#endif
+
+// <o> SEGGER_RTT_CONFIG_DEFAULT_MODE  - RTT behavior if the buffer is full.
+ 
+
+// <i> The following modes are supported:
+// <i> - SKIP  - Do not block, output nothing.
+// <i> - TRIM  - Do not block, output as much as fits.
+// <i> - BLOCK - Wait until there is space in the buffer.
+// <0=> SKIP 
+// <1=> TRIM 
+// <2=> BLOCK_IF_FIFO_FULL 
+
+#ifndef SEGGER_RTT_CONFIG_DEFAULT_MODE
+#define SEGGER_RTT_CONFIG_DEFAULT_MODE 0
+#endif
+
 
 // </h> 
 //==========================================================

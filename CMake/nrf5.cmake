@@ -290,7 +290,7 @@ function(nrf5_target exec_target)
   # Target for flashing SoftDevice
   if(local_sd_hex_file_path)
     add_custom_target(flash_softdevice
-      COMMAND ${NRF5_NRFJPROG} --program ${local_sd_hex_file_path} -f nrf52 --sectorerase ${nrfjprog_jlink_sn_opt} ${nrfjprog_jlink_sn_arg}
+      COMMAND ${NRF5_NRFJPROG} --program ${local_sd_hex_file_path} -f nrf52 --verify ${nrfjprog_jlink_sn_opt} ${nrfjprog_jlink_sn_arg}
       COMMAND ${NRF5_NRFJPROG} --reset -f nrf52 ${nrfjprog_jlink_sn_opt} ${nrfjprog_jlink_sn_arg}
     )
   else()
@@ -299,7 +299,7 @@ function(nrf5_target exec_target)
   # Target for flashing MBR
   if(local_mbr_hex_file_path)
     add_custom_target(flash_mbr
-      COMMAND ${NRF5_NRFJPROG} --program ${local_mbr_hex_file_path} -f nrf52 --sectorerase ${nrfjprog_jlink_sn_opt} ${nrfjprog_jlink_sn_arg}
+      COMMAND ${NRF5_NRFJPROG} --program ${local_mbr_hex_file_path} -f nrf52 --verify ${nrfjprog_jlink_sn_opt} ${nrfjprog_jlink_sn_arg}
       COMMAND ${NRF5_NRFJPROG} --reset -f nrf52 ${nrfjprog_jlink_sn_opt} ${nrfjprog_jlink_sn_arg}
     )
   else()
@@ -311,12 +311,12 @@ function(nrf5_target exec_target)
   endif()
   # Target for flashing the output executable
   add_custom_target(flash DEPENDS hex 
-    COMMAND ${NRF5_NRFJPROG} --program "${exec_target}.hex" -f nrf52 --sectorerase ${nrfjprog_jlink_sn_opt} ${nrfjprog_jlink_sn_arg}
+    COMMAND ${NRF5_NRFJPROG} --program "${exec_target}.hex" -f nrf52 --verify --log ${nrfjprog_jlink_sn_opt} ${nrfjprog_jlink_sn_arg}
     COMMAND ${NRF5_NRFJPROG} --reset -f nrf52 ${nrfjprog_jlink_sn_opt} ${nrfjprog_jlink_sn_arg}
   )
   # Target for erasing Flash memory and the UICR page
   add_custom_target(erase_all
-    COMMAND ${NRF5_NRFJPROG} --eraseall -f nrf52 ${nrfjprog_jlink_sn_opt} ${nrfjprog_jlink_sn_arg}
+    COMMAND ${NRF5_NRFJPROG} --recover -f nrf52 ${nrfjprog_jlink_sn_opt} ${nrfjprog_jlink_sn_arg}
   )
 
   add_custom_target(generate_dfu
