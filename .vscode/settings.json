@@ -29,7 +29,18 @@
         "nrf_hw_backend_rng_mbedtls.h": "c",
         "app_error.h": "c",
         "nrf_log_ctrl.h": "c",
-        "app_timer.h": "c"
+        "app_timer.h": "c",
+        "array": "cpp",
+        "compare": "cpp",
+        "functional": "cpp",
+        "ostream": "cpp",
+        "ranges": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "segger_rtt.h": "c",
+        "segger_rtt_conf.h": "c",
+        "timer.h": "c"
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser",
 }

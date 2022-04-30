@@ -1,33 +1,35 @@
 #include "nrf.h"
+#include "clock.h"
+#include "timer.h"
 
-static void lfclk_config(void)
-{
-  NRF_CLOCK->LFCLKSRC = (CLOCK_LFCLKSRC_SRC_RC << CLOCK_LFCLKSRC_SRC_Pos); // We use the internal RC reference, its enough for us
-  NRF_CLOCK->EVENTS_LFCLKSTARTED = 0;
-  NRF_CLOCK->TASKS_LFCLKSTART = 1;
-
-  // Wait for the low frequency clock to start
-  while (NRF_CLOCK->EVENTS_LFCLKSTARTED == 0) {}
-  NRF_CLOCK->EVENTS_LFCLKSTARTED = 0;
-}
-
-/**
- * @brief Sleep until the next interrupt from NVIC arrives
- */
-static void sleep_until_interrupt(void)
-{
-    __WFE();
-    __SEV();
-    __WFE();
-}
+#ifdef LOG
+#include "rtt/SEGGER_RTT.h"
+#endif
 
 int main(void) 
 {
-  lfclk_config();
-  NRF_RADIO->POWER = RADIO_POWER_POWER_Disabled << RADIO_POWER_POWER_Pos;
+  #ifdef LOG
+  SEGGER_RTT_printf(0, "Booted up... \r\n");
+  #endif
 
-  for (;;) 
-  {
-    sleep_until_interrupt(); 
+  // Init timers
+  clock_init();
+  timer_init();
+
+  // Power management
+  NRF_POWER->TASKS_LOWPWR = 1;
+  NRF_POWER->DCDCEN = 1;
+
+  #ifdef LOG
+  SEGGER_RTT_printf(0, "Power settings configured (LOWPWR and DCDC enable) ... \r\n");
+  #endif
+  
+  while(1)
+  {     
+    // Enter System ON sleep mode
+    __WFE();  
+    // Make sure any pending events are cleared
+    __SEV();
+    __WFE();
   }
 }
