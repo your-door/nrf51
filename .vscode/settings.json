@@ -40,7 +40,18 @@
         "utility": "cpp",
         "segger_rtt.h": "c",
         "segger_rtt_conf.h": "c",
-        "timer.h": "c"
+        "timer.h": "c",
+        "string": "c",
+        "string_view": "c",
+        "ble.h": "c",
+        "main.h": "c",
+        "random.h": "c",
+        "string.h": "c",
+        "optional": "c",
+        "system_error": "c",
+        "stdio.h": "c",
+        "ble_callback_chain.h": "c",
+        "aes_callback_chain.h": "c"
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser",
 }

@@ -6,6 +6,12 @@ add_executable(${CMAKE_PROJECT_NAME}
   "src/main.c"
   "src/clock.c"
   "src/timer.c"
+  "src/ble.c"
+  "src/random.c"
+  "src/aes.c"
+  "src/ble_callback_chain.c"
+  "src/aes_callback_chain.c"
+  "src/callback.c"
   "src/rtt/SEGGER_RTT.c"
   "src/rtt/SEGGER_RTT_printf.c"
 )

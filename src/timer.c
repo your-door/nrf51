@@ -21,12 +21,11 @@ timer_def* slots[4];
 uint8_t current_slot = 0;
 uint32_t overflow_seconds = 0;
 
-void timer_init(void) 
+void timer_init(void (*cb)()) 
 {
     NRF_RTC1->PRESCALER = COUNTER_PRESCALER;                                        // Set prescaler to a TICK of RTC_FREQUENCY
 
     // Enable overflow interrupts for "time" tracking
-    NRF_RTC1->EVTENSET = RTC_EVTENSET_OVRFLW_Msk;
     NRF_RTC1->INTENSET = RTC_INTENSET_OVRFLW_Msk;
 
     NVIC_ClearPendingIRQ(RTC1_IRQn);
@@ -38,10 +37,12 @@ void timer_init(void)
 
     #ifdef LOG
     SEGGER_RTT_printf(0, "%u> TIMER: RTC1 started\r\n", timer_get_seconds());
-    #endif     
+    #endif    
+
+    cb(); 
 }
 
-void timer_add(void (*cb)(), uint32_t interval)
+uint8_t timer_add(void (*cb)(), uint32_t interval)
 {
     // Check if we have slots left in RTC
     if (current_slot == 3) 
@@ -49,7 +50,7 @@ void timer_add(void (*cb)(), uint32_t interval)
         #ifdef LOG
         SEGGER_RTT_printf(0, "%u> TIMER: Not slots left in RTC\r\n", timer_get_seconds());
         #endif    
-        return;
+        return 0xF;
     }
 
     timer_def *timer_slot;
@@ -61,7 +62,12 @@ void timer_add(void (*cb)(), uint32_t interval)
     NRF_RTC1->CC[current_slot] = interval * RTC_FREQUENCY;                 // We use compare 0 for low freq sync    
     NRF_RTC1->INTENSET = 0x1UL << (16UL + current_slot);
 
+    #ifdef LOG
+    SEGGER_RTT_printf(0, "%u> TIMER: Added timer with interval %u to slot %u\r\n", timer_get_seconds(), interval, current_slot);
+    #endif  
+    
     current_slot++;
+    return current_slot - 1;
 }
 
 uint64_t timer_get_seconds()
@@ -69,8 +75,18 @@ uint64_t timer_get_seconds()
     return (NRF_RTC1->COUNTER + (overflow_seconds * 0xFFFFFF)) / RTC_FREQUENCY;
 }
 
+void timer_reschedule(uint8_t slot)
+{
+    timer_def *timer_slot = slots[slot];
+    NRF_RTC1->CC[slot] = NRF_RTC1->COUNTER + (timer_slot->interval * RTC_FREQUENCY);
+}
+
 void RTC1_IRQHandler(void)
 {
+    #ifdef LOG
+    SEGGER_RTT_printf(0, "%u> TIMER: Interrupt\r\n", timer_get_seconds());
+    #endif
+
     // Check if we overflowed
     if (NRF_RTC1->EVENTS_OVRFLW) 
     {
@@ -98,8 +114,7 @@ void RTC1_IRQHandler(void)
             timer_def *timer_slot = slots[counter];
             if (timer_slot != NULL) 
             {
-                timer_slot->cb();
-                NRF_RTC1->CC[counter] += timer_slot->interval * RTC_FREQUENCY;                  // We use compare 0 for low freq sync
+                timer_slot->cb(timer_reschedule);
             }
         }
 
