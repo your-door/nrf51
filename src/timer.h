@@ -3,6 +3,6 @@
 
 void timer_init(void (*cb)());
 uint8_t timer_add(void (*cb)(), uint32_t interval);
-uint64_t timer_get_seconds();
+uint32_t timer_get_seconds();
 
 #endif

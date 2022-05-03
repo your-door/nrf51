@@ -5,6 +5,7 @@
 #include "ble.h"
 #include "timer.h"
 #include "aes.h"
+#include "reboot_counter.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -57,7 +58,20 @@ void aes_callback_chain(void (*doneCB)())
   #endif
 
   // Encrypt new value
-  aes_encrypt(DEVICE_KEY, iv, DEVICE_ID, on_aes_encrypted);
+  uint8_t data[16];
+  memcpy(&data, DEVICE_ID, 10);
+
+  uint16_t reboot_counter = (uint16_t) reboot_counter_get();
+  data[10] = ((reboot_counter >> 8) & 0xFF); 
+  data[11] = (reboot_counter & 0xFF); 
+
+  uint32_t time = timer_get_seconds();
+  data[12] = ((time >> 24) & 0xFF); 
+  data[13] = ((time >> 16) & 0xFF); 
+  data[14] = ((time >> 8) & 0xFF); 
+  data[15] = (time & 0xFF); 
+
+  aes_encrypt(DEVICE_KEY, iv, data, on_aes_encrypted);
 }
 
 void aes_callback_chain_issue()

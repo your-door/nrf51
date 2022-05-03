@@ -70,7 +70,7 @@ uint8_t timer_add(void (*cb)(), uint32_t interval)
     return current_slot - 1;
 }
 
-uint64_t timer_get_seconds()
+uint32_t timer_get_seconds()
 {
     return (NRF_RTC1->COUNTER + (overflow_seconds * 0xFFFFFF)) / RTC_FREQUENCY;
 }

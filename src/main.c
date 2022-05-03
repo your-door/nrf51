@@ -8,6 +8,8 @@
 #include "ble_callback_chain.h"
 #include "callback.h"
 #include "aes_callback_chain.h"
+#include "pwr_mgmt.h"
+#include "reboot_counter.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -15,9 +17,6 @@
 #ifdef LOG
 #include "rtt/SEGGER_RTT.h"
 #endif
-
-#define NRF52_ONRAM0_OFFRAM0    POWER_RAM_POWER_S0POWER_Off     << POWER_RAM_POWER_S0POWER_Pos      \
-												      | POWER_RAM_POWER_S1POWER_Off     << POWER_RAM_POWER_S1POWER_Pos;
 
 void sleep_for_interrupt()
 {
@@ -45,8 +44,10 @@ void whenClockInited(void)
 
 int main(void) 
 {
+  reboot_counter_init();
+
   #ifdef LOG
-  SEGGER_RTT_printf(0, "0> CORE: Booted up\r\n");
+  SEGGER_RTT_printf(0, "0> CORE: Booted up with reboot counter %u\r\n", reboot_counter_get());
   #endif
 
   // Init timers
@@ -72,13 +73,7 @@ int main(void)
   adv_pdu[1] = M_BD_ADDR_SIZE + sizeof(beacon_temp_only);
 
   // Power management
-  NRF_POWER->TASKS_LOWPWR = 1;
-  NRF_POWER->DCDCEN = 1;
-
-  // Turn off RAM we don't need
-  NRF_POWER->RAM[1].POWER = NRF52_ONRAM0_OFFRAM0;
-  NRF_POWER->RAM[2].POWER = NRF52_ONRAM0_OFFRAM0;
-  NRF_POWER->RAM[3].POWER = NRF52_ONRAM0_OFFRAM0;
+  power_management_init();
 
   #ifdef LOG
   SEGGER_RTT_printf(0, "0> CORE: Power settings configured (LOWPWR and DCDC enable)\r\n");
