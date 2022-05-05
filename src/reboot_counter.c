@@ -1,5 +1,6 @@
 #include "nrf.h"
 #include "reboot_counter.h"
+#include "compiler.h"
 
 #ifdef LOG
 #include "rtt/SEGGER_RTT.h"

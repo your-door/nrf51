@@ -1,7 +1,7 @@
 #include "nrf.h"
 #include "aes.h"
 #include "timer.h"
-#include "callback.h"
+#include "compiler.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -18,11 +18,6 @@ typedef struct {
 
 static void (*onECBDoneCB)(uint8_t encrypted[16]);
 
-void aes_cb_free()
-{
-    free((void *) NRF_ECB->ECBDATAPTR);
-}
-
 void ECB_IRQHandler(void)
 {
     #ifdef LOG
@@ -35,8 +30,10 @@ void ECB_IRQHandler(void)
         NRF_ECB->EVENTS_ENDECB = 0;
 
         // Get the data out of the struct
-        ecb_data *data = (ecb_data *) NRF_ECB->ECBDATAPTR;
-        callback_add_data(onECBDoneCB, data->encrypted, aes_cb_free);
+        ecb_data* data = (ecb_data *) NRF_ECB->ECBDATAPTR;
+        onECBDoneCB(data->encrypted);
+        onECBDoneCB = NULL;
+        free(data);
     }
 }
 

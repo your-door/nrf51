@@ -11,7 +11,6 @@ add_executable(${CMAKE_PROJECT_NAME}
   "src/aes.c"
   "src/ble_callback_chain.c"
   "src/aes_callback_chain.c"
-  "src/callback.c"
   "src/pwr_mgmt.c"
   "src/reboot_counter.c"
   "src/rtt/SEGGER_RTT.c"

@@ -2,6 +2,7 @@
 
 #include "nrf.h"
 #include "timer.h"
+#include "compiler.h"
 
 #ifdef LOG
 #include "rtt/SEGGER_RTT.h"
@@ -70,18 +71,18 @@ uint8_t timer_add(void (*cb)(), uint32_t interval)
     return current_slot - 1;
 }
 
-uint32_t timer_get_seconds()
+RAM_CODE uint32_t timer_get_seconds()
 {
     return (NRF_RTC1->COUNTER + (overflow_seconds * 0xFFFFFF)) / RTC_FREQUENCY;
 }
 
-void timer_reschedule(uint8_t slot)
+RAM_CODE void timer_reschedule(uint8_t slot)
 {
     timer_def *timer_slot = slots[slot];
     NRF_RTC1->CC[slot] = NRF_RTC1->COUNTER + (timer_slot->interval * RTC_FREQUENCY);
 }
 
-void RTC1_IRQHandler(void)
+RAM_CODE void RTC1_IRQHandler(void)
 {
     #ifdef LOG
     SEGGER_RTT_printf(0, "%u> TIMER: Interrupt\r\n", timer_get_seconds());

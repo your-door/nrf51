@@ -6,6 +6,7 @@
 #include "timer.h"
 #include "aes.h"
 #include "reboot_counter.h"
+#include "compiler.h"
 
 #include <string.h>
 #include <stdlib.h>

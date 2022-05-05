@@ -2,6 +2,7 @@
 #include "ble.h"
 #include "clock.h"
 #include "timer.h"
+#include "compiler.h"
 
 #ifdef LOG
 #include "rtt/SEGGER_RTT.h"
@@ -12,12 +13,12 @@ static uint8_t adv_pdu[40];
 static void (*ble_timerEventDoneCB)();
 static uint8_t ble_timer_slot;
 
-uint8_t* ble_get_adv_pdu() 
+RAM_CODE uint8_t* ble_get_adv_pdu() 
 {
     return &(adv_pdu);
 }
 
-void reschedule_ble_data(void)
+RAM_CODE void reschedule_ble_data(void)
 {
     #ifdef LOG
     SEGGER_RTT_printf(0, "%u> BLE CB: HFCLK stopped. Telling timer to reschedule\r\n", timer_get_seconds());
@@ -26,25 +27,25 @@ void reschedule_ble_data(void)
     ble_timerEventDoneCB(ble_timer_slot);
 }
 
-void finished_ble_data(void)
+RAM_CODE void finished_ble_data(void)
 {
     // Stop HFCLK again
     clock_stop_hf(reschedule_ble_data);
 }
 
-void send_ble_data_on_channel_39(void)
+RAM_CODE void send_ble_data_on_channel_39(void)
 {
     // Send data on channel
     ble_send_on_channel(39, adv_pdu, finished_ble_data);
 }
 
-void send_ble_data_on_channel_38(void)
+RAM_CODE void send_ble_data_on_channel_38(void)
 {
     // Send data on channel
     ble_send_on_channel(38, adv_pdu, send_ble_data_on_channel_39);
 }
 
-void send_ble_data_on_channel_37(void) 
+RAM_CODE void send_ble_data_on_channel_37(void) 
 {
     #ifdef LOG
     SEGGER_RTT_printf(0, "%u> CORE: HFCLK started. BLE init next\r\n", timer_get_seconds());
@@ -57,7 +58,7 @@ void send_ble_data_on_channel_37(void)
     ble_send_on_channel(37, adv_pdu, send_ble_data_on_channel_38);
 }
 
-void ble_callback_chain(void (*doneCB)()) 
+RAM_CODE void ble_callback_chain(void (*doneCB)()) 
 {
     ble_timerEventDoneCB = doneCB;
 

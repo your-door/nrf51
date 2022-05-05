@@ -6,10 +6,10 @@
 #include "random.h"
 #include "aes.h"
 #include "ble_callback_chain.h"
-#include "callback.h"
 #include "aes_callback_chain.h"
 #include "pwr_mgmt.h"
 #include "reboot_counter.h"
+#include "compiler.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -18,16 +18,13 @@
 #include "rtt/SEGGER_RTT.h"
 #endif
 
-void sleep_for_interrupt()
+RAM_CODE void sleep_for_interrupt()
 {
   // Enter System ON sleep mode
   __WFE();  
   // Make sure any pending events are cleared
   __SEV();
   __WFE();
-
-  // Now we issue callbacks (after we have handled IRQs)
-  callback_run();
 }
 
 void whenTimerInited(void)
@@ -79,6 +76,11 @@ int main(void)
   SEGGER_RTT_printf(0, "0> CORE: Power settings configured (LOWPWR and DCDC enable)\r\n");
   #endif
   
+  idle();
+}
+
+RAM_CODE void idle()
+{
   while(1)
   {     
     sleep_for_interrupt();

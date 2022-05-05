@@ -1,7 +1,7 @@
 #include "nrf.h"
 #include "random.h"
 #include "timer.h"
-#include "callback.h"
+#include "compiler.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -13,11 +13,6 @@
 static uint8_t value[8];                            // We only generate IVs 8 bytes long
 static uint8_t index = 0;
 static void (*onFirstDataCB)();
-
-void random_cb_free()
-{
-
-}
 
 void RNG_IRQHandler(void)
 {
@@ -38,8 +33,11 @@ void RNG_IRQHandler(void)
 
             NRF_RNG->TASKS_STOP = 1;
 
-            callback_add(onFirstDataCB, random_cb_free);
-            onFirstDataCB = NULL;
+            if (onFirstDataCB != NULL) 
+            {
+                onFirstDataCB();
+                onFirstDataCB = NULL;
+            }
         }
     }
 }

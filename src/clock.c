@@ -1,7 +1,7 @@
 #include "nrf.h"
 #include "clock.h"
 #include "timer.h"
-#include "callback.h"
+#include "compiler.h"
 
 #include <stddef.h>
 
@@ -12,13 +12,7 @@
 static void (*onInitCB)();
 static void (*onHFCLKStartedCB)();
 
-void clock_cb_free()
-{
-    onInitCB = NULL;
-    onHFCLKStartedCB = NULL;
-}
-
-void POWER_CLOCK_IRQHandler(void)
+RAM_CODE void POWER_CLOCK_IRQHandler(void)
 {
     #ifdef LOG
     SEGGER_RTT_printf(0, "%u> CLOCK: Interrupt\r\n", timer_get_seconds());
@@ -32,7 +26,11 @@ void POWER_CLOCK_IRQHandler(void)
         SEGGER_RTT_printf(0, "%u> CLOCK: LFCLK setup against external XTAL\r\n", timer_get_seconds());
         #endif
 
-        callback_add(onInitCB, clock_cb_free);        
+        if (onInitCB != NULL)
+        {
+            onInitCB();
+            onInitCB = NULL;
+        }     
     }
 
     if (NRF_CLOCK->EVENTS_HFCLKSTARTED) 
@@ -43,7 +41,11 @@ void POWER_CLOCK_IRQHandler(void)
         SEGGER_RTT_printf(0, "%u> CLOCK: HFCLK started up\r\n", timer_get_seconds());
         #endif
 
-        callback_add(onHFCLKStartedCB, clock_cb_free); 
+        if (onHFCLKStartedCB != NULL)
+        {
+            onHFCLKStartedCB();
+            onHFCLKStartedCB = NULL;
+        }
     }
 }
 
@@ -64,13 +66,13 @@ void clock_init(void (*cb)())
     NRF_CLOCK->TASKS_LFCLKSTART = 1;
 }
 
-void clock_start_hf(void (*cb)())
+RAM_CODE void clock_start_hf(void (*cb)())
 {
     onHFCLKStartedCB = cb;
     NRF_CLOCK->TASKS_HFCLKSTART = 1;
 }
 
-void clock_stop_hf(void (*cb)())
+RAM_CODE void clock_stop_hf(void (*cb)())
 {
     NRF_CLOCK->TASKS_HFCLKSTOP = 1;
  

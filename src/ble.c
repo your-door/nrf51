@@ -1,7 +1,7 @@
 #include "nrf.h"
 #include "ble.h"
 #include "main.h"
-#include "callback.h"
+#include "compiler.h"
 
 #include <string.h>
 #include <stdbool.h>
@@ -62,7 +62,7 @@ uint8_t seed[3] = {0x55, 0x55, 0x55};
 
 static void (*onDisableCB)();
 
-void RADIO_IRQHandler(void)
+RAM_CODE void RADIO_IRQHandler(void)
 {
     #ifdef LOG
     SEGGER_RTT_printf(0, "%u> BLE: Interrupt\r\n", timer_get_seconds());
@@ -72,12 +72,18 @@ void RADIO_IRQHandler(void)
     {
         NRF_RADIO->EVENTS_DISABLED = 0;
 
-        callback_add(onDisableCB, NULL);
-        onDisableCB = NULL;
+        // We need to check if the callback is the same since it can change
+        // when the callback is fired due to send calling inside a callback
+        void* before = onDisableCB;
+        onDisableCB();
+        if (onDisableCB == before) 
+        {
+            onDisableCB = NULL;
+        }
     }
 }
 
-void ble_send_on_channel(uint8_t channel_index, uint8_t * data, void (*cb)())
+RAM_CODE void ble_send_on_channel(uint8_t channel_index, uint8_t * data, void (*cb)())
 {
     onDisableCB = cb;
 
@@ -97,7 +103,7 @@ void ble_send_on_channel(uint8_t channel_index, uint8_t * data, void (*cb)())
     NRF_RADIO->TASKS_TXEN = 1;
 }
 
-void ble_init(void) 
+RAM_CODE void ble_init(void) 
 {
     NVIC_DisableIRQ(RADIO_IRQn);
 
