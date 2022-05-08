@@ -24,7 +24,6 @@ void ECB_IRQHandler(void)
     SEGGER_RTT_printf(0, "%u> AES: Interrupt\r\n", timer_get_seconds());
     #endif
 
-
     if (NRF_ECB->EVENTS_ENDECB)
     {
         NRF_ECB->EVENTS_ENDECB = 0;
@@ -65,4 +64,8 @@ void aes_encrypt(uint8_t key[16], uint8_t iv[16], uint8_t data[16], void (*cb)(u
 
     NRF_ECB->ECBDATAPTR = (uint32_t) data_ecb;
     NRF_ECB->TASKS_STARTECB = 1;
+
+    #ifdef LOG
+    SEGGER_RTT_printf(0, "%u> AES: Start encryption\r\n", timer_get_seconds());
+    #endif
 }

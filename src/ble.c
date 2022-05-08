@@ -15,6 +15,12 @@ uint8_t access_address[4] = {0xD6, 0xBE, 0x89, 0x8E};
 uint8_t seed[3] = {0x55, 0x55, 0x55};
 
 
+#ifdef NRF52820_XXAA
+#define MAX_TX_POWER 0x8
+#else
+#define MAX_TX_POWER 0x4
+#endif
+
 /**@brief The maximum possible length in device discovery mode. */
 #define DD_MAX_PAYLOAD_LENGTH         (31 + 6)
 
@@ -144,7 +150,7 @@ RAM_CODE void ble_init(void)
                          | (((uint32_t)access_address[0]) << 8) );
 
     NRF_RADIO->CRCINIT = ((uint32_t)seed[0]) | ((uint32_t)seed[1])<<8 | ((uint32_t)seed[2])<<16;
-    NRF_RADIO->TXPOWER = 0x8;
+    NRF_RADIO->TXPOWER = MAX_TX_POWER;
     NRF_RADIO->INTENSET = (RADIO_INTENSET_DISABLED_Enabled << RADIO_INTENSET_DISABLED_Pos);
 
     NVIC_ClearPendingIRQ(RADIO_IRQn);

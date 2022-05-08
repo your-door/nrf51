@@ -51,7 +51,10 @@
         "system_error": "c",
         "stdio.h": "c",
         "ble_callback_chain.h": "c",
-        "aes_callback_chain.h": "c"
+        "aes_callback_chain.h": "c",
+        "nrf51_to_nrf52.h": "c",
+        "nrf52_bitfields.h": "c",
+        "nrf52.h": "c"
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser",
 }

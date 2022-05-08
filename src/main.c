@@ -39,6 +39,14 @@ void whenClockInited(void)
   timer_init(whenTimerInited);
 }
 
+RAM_CODE void idle()
+{
+  while(1)
+  {     
+    sleep_for_interrupt();
+  }
+}
+
 int main(void) 
 {
   reboot_counter_init();
@@ -77,12 +85,4 @@ int main(void)
   #endif
   
   idle();
-}
-
-RAM_CODE void idle()
-{
-  while(1)
-  {     
-    sleep_for_interrupt();
-  }
 }
