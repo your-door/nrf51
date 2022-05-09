@@ -54,7 +54,8 @@
         "aes_callback_chain.h": "c",
         "nrf51_to_nrf52.h": "c",
         "nrf52_bitfields.h": "c",
-        "nrf52.h": "c"
+        "nrf52.h": "c",
+        "random": "c"
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser",
 }

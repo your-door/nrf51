@@ -71,6 +71,6 @@ RAM_CODE void ble_callback_chain(void (*doneCB)())
 
 void ble_callback_chain_register()
 {
-    ble_timer_slot = timer_add(ble_callback_chain, 3);
+    ble_timer_slot = timer_add(ble_callback_chain, 1);
 }
 
