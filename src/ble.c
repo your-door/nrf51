@@ -16,9 +16,13 @@ uint8_t seed[3] = {0x55, 0x55, 0x55};
 
 
 #ifdef NRF52820_XXAA
-#define MAX_TX_POWER 0x8
+#define MAX_TX_POWER (RADIO_TXPOWER_TXPOWER_Pos8dBm)
+#define BLE_MODE (RADIO_MODE_MODE_Ble_LR125Kbit)
+#define END_SHORTCUT (RADIO_SHORTS_PHYEND_DISABLE_Enabled << RADIO_SHORTS_PHYEND_DISABLE_Pos)
 #else
-#define MAX_TX_POWER 0x4
+#define MAX_TX_POWER (RADIO_TXPOWER_TXPOWER_Pos4dBm)
+#define BLE_MODE (RADIO_MODE_MODE_Ble_1Mbit)
+#define END_SHORTCUT (RADIO_SHORTS_END_DISABLE_Enabled << RADIO_SHORTS_END_DISABLE_Pos)
 #endif
 
 /**@brief The maximum possible length in device discovery mode. */
@@ -34,7 +38,7 @@ uint8_t seed[3] = {0x55, 0x55, 0x55};
 #define DEFAULT_RADIO_SHORTS                                             \
 (                                                                        \
     (RADIO_SHORTS_READY_START_Enabled << RADIO_SHORTS_READY_START_Pos) | \
-    (RADIO_SHORTS_END_DISABLE_Enabled << RADIO_SHORTS_END_DISABLE_Pos)   \
+    END_SHORTCUT   \
 )
 
 
@@ -139,7 +143,7 @@ RAM_CODE void ble_init(void)
 
     NRF_RADIO->RXADDRESSES  = ( (RADIO_RXADDRESSES_ADDR0_Enabled) << RADIO_RXADDRESSES_ADDR0_Pos);
 
-    NRF_RADIO->MODE    = ((RADIO_MODE_MODE_Ble_1Mbit) << RADIO_MODE_MODE_Pos) & RADIO_MODE_MODE_Msk;
+    NRF_RADIO->MODE    = ((BLE_MODE) << RADIO_MODE_MODE_Pos) & RADIO_MODE_MODE_Msk;
 
     NRF_RADIO->TIFS = 150; // Time in mircos between two packets
 
