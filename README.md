@@ -5,6 +5,7 @@
 A tag issues a ADV with MD every 3 seconds on channel 37,38 and 39. The MD contains 8 bytes IV and 16 bytes encrypted AES data. The device addr is static inside ADV for key lookups.
 
 BLE MD Data format:
+```
 +-------+----------+-------------------------------------------------+
 | Bytes |   Field  |                   Description                   |
 |       |   Name   |                                                 |
@@ -15,8 +16,10 @@ BLE MD Data format:
 |  8:24 | encrypted| Data is ECB encrypted and XOR'd with the given  |
 |       | data     | IV. Decrypted data format is documented below   |
 +-------+----------+-------------------------------------------------+
+```
 
 Decrypted Data format:
+```
 +-------+----------+-------------------------------------------------+
 | Bytes |   Field  |                   Description                   |
 |       |   Name   |                                                 |
@@ -30,6 +33,7 @@ Decrypted Data format:
 | 12:15 | uint32   | Time in seconds since last boot                 |
 |       | timestamp|                                                 |
 +-------+----------+-------------------------------------------------+
+```
 
 ## Security ideas
 
